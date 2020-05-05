@@ -49,6 +49,20 @@ namespace gbxmlviewer.ViewModel
             protected set;
         }
 
+        bool _isSelected = false;
+        public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                _isSelected = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         /// <summary>
         /// The visibility of the ID (depends on if it is empty or null)
         /// </summary>

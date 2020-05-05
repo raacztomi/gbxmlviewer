@@ -2,12 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:h="http://helix-toolkit.org/wpf"
              xmlns:local="clr-namespace:gbxmlviewer"
              mc:Ignorable="d">
     <Grid>
-        <Viewport3D x:Name="_viewportControl" ClipToBounds="True" Canvas.Left="0" Canvas.Top="10" Camera="{Binding Camera}">
-            <Viewport3D.Children>
+        <h:HelixViewport3D x:Name="_viewportControl" ClipToBounds="True" ZoomExtentsWhenLoaded="True">
+            <h:HelixViewport3D.Children>
+                <h:DefaultLights/>
                 <ModelVisual3D>
                     <ModelVisual3D.Content>
                         <Model3DGroup Children="{Binding Lights}"/>
@@ -15,10 +17,10 @@
                 </ModelVisual3D>
                 <ModelVisual3D>
                     <ModelVisual3D.Content>
-                        <Model3DGroup Children="{Binding Geometry}"/>
+                        <Model3DGroup Children="{Binding GeometryCollection}"/>
                     </ModelVisual3D.Content>
                 </ModelVisual3D>
-            </Viewport3D.Children>
-        </Viewport3D>
+            </h:HelixViewport3D.Children>
+        </h:HelixViewport3D>
     </Grid>
 </UserControl>

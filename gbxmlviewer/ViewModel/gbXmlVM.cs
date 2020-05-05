@@ -10,7 +10,7 @@ namespace gbxmlviewer.ViewModel
     /// Class corresponds to the root level of the gbXML file
     /// It extracts elements relevant to the context of this tool: Building and Surfaces, make those available as child
     /// </summary>
-    class gbXmlVM : gbXmlElementVM
+    public class gbXmlVM : gbXmlElementVM
     {
         /// <summary>
         /// Extract building and surfaces
@@ -27,10 +27,10 @@ namespace gbxmlviewer.ViewModel
                 }
 
                 // Surface elements
-                foreach (var surf in campus.Elements().Where(e => e.Name.LocalName == "Surface"))
-                {
-                    children.Add(new SurfaceVM() { Data = surf });
-                }
+                //foreach (var surf in campus.Elements().Where(e => e.Name.LocalName == "Surface"))
+                //{
+                //    children.Add(new SurfaceVM() { Data = surf });
+                //}
             }
         }
     }

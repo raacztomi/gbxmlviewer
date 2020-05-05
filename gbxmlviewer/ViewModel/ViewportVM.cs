@@ -10,11 +10,30 @@ using System.Windows;
 using System.Windows.Media.Media3D;
 using System.Windows.Media;
 using System.Windows.Controls;
+using HelixToolkit.Wpf;
 
 namespace gbxmlviewer.ViewModel
 {
     public class ViewportVM : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Default material of the viewport elements
+        /// </summary>
+        public static Material DefaultMaterial
+        {
+            get;
+            private set;
+        } = MaterialHelper.CreateMaterial(Colors.LightGray);
+
+        /// <summary>
+        /// Selection material of the viewport elements
+        /// </summary>
+        public static Material SelectionMaterial
+        {
+            get;
+            private set;
+        } = MaterialHelper.CreateMaterial(Colors.Yellow);
+
         /// <summary>
         /// Implementation of INotifyPropertyChaned with auxiliary function
         /// </summary>
@@ -29,185 +48,44 @@ namespace gbxmlviewer.ViewModel
         }
 
         /// <summary>
-        /// Construct with defaults
+        /// Map of current elements by its RefElem
         /// </summary>
-        public ViewportVM()
-        {
-            _perspectiveCamera = new PerspectiveCamera()
-            {
-                Position = new Point3D(0, -100, 140),
-                LookDirection = new Vector3D(0, 1, -1),
-                FieldOfView = 60
-            };
-
-            var light = new AmbientLight()
-            {
-                Color = Color.FromRgb(255, 255, 255)
-            };
-            _lights.Add(light);
-        }
-
-
-        /// <summary>
-        /// The camera
-        /// </summary>
-        private PerspectiveCamera _perspectiveCamera;
-        public PerspectiveCamera Camera
-        {
-            get
-            {
-                return _perspectiveCamera;
-            }
-        }
-
-        /// <summary>
-        /// Lights
-        /// </summary>
-        private Model3DCollection _lights = new Model3DCollection();
-        public Model3DCollection Lights
-        {
-            get
-            {
-                return _lights;
-            }
-        }
+        private Dictionary<object, ViewportElementVM> _elementMap = new Dictionary<object, ViewportElementVM>();
 
         /// <summary>
         /// Geometry items
         /// </summary>
-        private Model3DCollection _geometry = new Model3DCollection();
-        public Model3DCollection Geometry
+        private Model3DCollection _geometryCollection = new Model3DCollection();
+        public Model3DCollection GeometryCollection
         {
             get
             {
-                return _geometry;
+                return _geometryCollection;
             }
         }
 
-        /// <summary>
-        /// The XML data viewed
-        /// </summary>
-        protected XElement _data = null;
-        public XElement Data
+        public void Clear()
         {
-            get
-            {
-                return _data;
-            }
-            set
-            {
-                _data = value;
-                _updateAfterDataChanged();
-                //_testContent();
-                NotifyPropertyChanged();
-                NotifyPropertyChanged("Geometry");
-            }
+            _elementMap.Clear();
+            _geometryCollection.Clear();
+            NotifyPropertyChanged("GeometryCollection");
         }
 
-        private void _updateAfterDataChanged()
+        public void AddElem(ViewportElementVM elem)
         {
-            var campus = Data.Elements().Where(e => e.Name.LocalName == "Campus").FirstOrDefault();
-            if (campus != null)
-            {
-                // Building elements
-                foreach (var bldg in campus.Elements().Where(e => e.Name.LocalName == "Building"))
+            if(!_elementMap.ContainsKey(elem.RefElem))
+            {   // Not already added
+                _elementMap[elem.RefElem] = elem;
+                foreach (var geom in elem.GeometryElements)
                 {
-                    // Spaces elements
-                    foreach (var space in bldg.Elements().Where(e => e.Name.LocalName == "Space"))
-                    {
-                        // Shell geometry
-                        foreach (var shell in space.Elements().Where(e => e.Name.LocalName == "ShellGeometry"))
-                        {
-                            // Closed shell elements
-                            foreach (var cShell in shell.Elements().Where(e => e.Name.LocalName == "ClosedShell"))
-                            {
-                                // Polyloop elements
-                                foreach (var poly in cShell.Elements().Where(e => e.Name.LocalName == "PolyLoop"))
-                                {
-                                    var geom = _polyLoopGeometry(poly);
-                                    if(geom != null)
-                                    {
-                                        _geometry.Add(geom);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Surface elements
-                //foreach (var surf in campus.Elements().Where(e => e.Name.LocalName == "Surface"))
-                //{
-                //    children.Add(new SurfaceVM() { Data = surf });
-                //}
-            }
-        }
-
-        private void _testContent()
-        {
-            _geometry.Clear();
-
-            var indices = new Int32Collection() { 0, 1, 2 };
-            var positions = new Point3DCollection()
-            {
-                new Point3D( 1.0, 0.0, 0.0),
-                new Point3D( 0.5, 0.5, 0.0),
-                new Point3D(-1.0, 0.0, 0.0)
-            };
-            _geometry.Add(_makeMesh(positions, indices));
-        }
-
-        private static GeometryModel3D _makeMesh(Point3DCollection points, Int32Collection indices)
-        {
-            var geom = new GeometryModel3D()
-            {
-                Geometry = new MeshGeometry3D()
-                {
-                    TriangleIndices = indices,
-                    Positions = points
-                },
-                Material = new DiffuseMaterial(new SolidColorBrush(Colors.BlueViolet))
-            };
-
-            return geom;
-        }
-
-        private static GeometryModel3D _polyLoopGeometry(XElement poly)
-        {
-            var points = new Point3DCollection();
-            var indices = new Int32Collection();
-
-            // Cartesian points
-            foreach (var point in poly.Elements().Where(e => e.Name.LocalName == "CartesianPoint"))
-            {
-                var ptCoords = new List<double>();
-                foreach (var coord in point.Elements().Where(e => e.Name.LocalName == "Coordinate"))
-                {
-                    ptCoords.Add(double.Parse(coord.Value));
-                }
-                if(ptCoords.Count > 2)
-                {
-                    indices.Add(points.Count);
-                    points.Add(new Point3D(ptCoords[0], ptCoords[1], ptCoords[2]));
+                    _geometryCollection.Add(geom);
                 }
             }
-
-            if(points.Count < 3)
+            foreach(var child in elem.Children)
             {
-                return null;
+                AddElem(child);
             }
-
-            var geom = new GeometryModel3D()
-            {
-                Geometry = new MeshGeometry3D()
-                {
-                    TriangleIndices = indices,
-                    Positions = points
-                },
-                Material = new DiffuseMaterial(new SolidColorBrush(Colors.BlueViolet))
-            };
-
-            return geom;
+            NotifyPropertyChanged("GeometryCollection");
         }
     }
 }

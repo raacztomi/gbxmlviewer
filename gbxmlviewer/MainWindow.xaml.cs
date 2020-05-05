@@ -26,18 +26,34 @@ namespace gbxmlviewer
             InitializeComponent();
         }
 
-        private XElement _data;
-        public XElement Data
+        /// <summary>
+        /// The view model used for the navigation panel (tree view)
+        /// </summary>
+        public ViewModel.gbXmlVM NavigationVM
         {
             get
             {
-                return _data;
+                return _navigationControl.DataContext as ViewModel.gbXmlVM;
             }
             set
             {
-                _data = value;
-                _navigationControl.DataContext = new ViewModel.gbXmlVM() { Data = value };
-                _viewportControl.DataContext = new ViewModel.ViewportVM() { Data = value };
+                _navigationControl.DataContext = value;
+            }
+        }
+
+        /// <summary>
+        /// View model used for the viewport (3D view)
+        /// </summary>
+
+        public ViewModel.ViewportVM ViewportVM
+        {
+            get
+            {
+                return _viewportControl.DataContext as ViewModel.ViewportVM;
+            }
+            set
+            {
+                _viewportControl.DataContext = value;
             }
         }
     }

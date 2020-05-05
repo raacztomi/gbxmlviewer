@@ -9,6 +9,9 @@
     <Grid>
         <TreeView Name="_treeView" Background="Transparent" BorderBrush="Transparent" ItemsSource="{Binding Children}">
             <TreeView.Resources>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                </Style>
                 <HierarchicalDataTemplate DataType="{x:Type VM:gbXmlElementVM}" ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Name}"/>

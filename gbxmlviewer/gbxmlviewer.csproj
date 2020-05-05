@@ -67,6 +67,8 @@
     <Compile Include="ViewModel\gbXmlVM.cs" />
     <Compile Include="ViewModel\SpaceVM.cs" />
     <Compile Include="ViewModel\SurfaceVM.cs" />
+    <Compile Include="ViewModel\ViewModelHelper.cs" />
+    <Compile Include="ViewModel\ViewportElementVM.cs" />
     <Compile Include="ViewModel\ViewportVM.cs" />
     <Compile Include="ViewportControl.xaml.cs">
       <DependentUpon>ViewportControl.xaml</DependentUpon>

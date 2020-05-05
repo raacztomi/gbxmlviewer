@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gbxmlviewer.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -14,16 +15,22 @@ namespace gbxmlviewer
     public partial class App : Application
     {
         public Repository Repository { get; private set; } = new Repository();
+        public gbXmlVM NavigationVM { get; private set; } = new gbXmlVM();
+        public ViewportVM ViewportVM { get; private set; } = new ViewportVM();
 
         private void Start(object sender, StartupEventArgs e)
         {
             Repository.LoadFile();
+            NavigationVM.Data = Repository.Root;
+            ViewModelHelper.UpdateViewport(NavigationVM, ViewportVM);
 
-            MainWindow win = new MainWindow();
-            win.Data = Repository.Root;
+            MainWindow win = new MainWindow()
+            {
+                NavigationVM = NavigationVM,
+                ViewportVM = ViewportVM
+            };
             MainWindow = win;
             win.Show();
-
         }
     }
 }
