@@ -1,0 +1,40 @@
+﻿<Window x:Class="gbxmlviewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gbxmlviewer"
+        mc:Ignorable="d"
+        Title="gbXML Viewer"
+        Background="#F8F8F8">
+    <Window.Resources>
+        <Style x:Key="basic" TargetType="Control">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Style="{StaticResource basic}">
+            <MenuItem Header="_Open"/>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <local:NavigationControl x:Name="_navigationControl" Grid.Column="0" Style="{StaticResource basic}"/>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <local:ViewportControl x:Name="_viewportControl" Grid.Column="2" Style="{StaticResource basic}"/>
+            <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <local:PropertiesControl Grid.Column="4" Style="{StaticResource basic}"/>
+        </Grid>
+    </Grid>
+</Window>
