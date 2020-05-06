@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace gbxmlviewer
 {
-    public class BuildingVM : gbXmlElementVM
+    public class BuildingVM : GbXmlElementVM
     {
         /// <summary>
         /// Extract spaces 

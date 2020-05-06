@@ -23,7 +23,7 @@ namespace gbxmlviewer.ViewModel
         {
             get;
             private set;
-        } = MaterialHelper.CreateMaterial(Colors.LightGray);
+        } = MaterialHelper.CreateMaterial(Color.FromArgb(64, 192, 192, 192));
 
         /// <summary>
         /// Selection material of the viewport elements

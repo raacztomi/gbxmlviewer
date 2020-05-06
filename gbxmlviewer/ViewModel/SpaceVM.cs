@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace gbxmlviewer.ViewModel
 {
-    public class SpaceVM : gbXmlElementVM
+    public class SpaceVM : GbXmlElementVM
     {
         /// <summary>
         /// Ignore sub items

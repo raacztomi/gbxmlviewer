@@ -17,33 +17,45 @@ namespace gbxmlviewer.ViewModel
         /// <summary>
         /// Update the viewport from the element view model
         /// </summary>
-        public static void UpdateViewport(gbXmlVM elem, ViewportVM viewport)
+        public static void UpdateViewport(GbXmlVM elem, ViewportVM viewport)
         {
+            Material surfMaterial = MaterialHelper.CreateMaterial(Color.FromArgb(32, 64, 64, 128));
+
             viewport.Clear();
-            foreach (BuildingVM bldg in elem.Children)
+            foreach (BuildingVM bldg in elem.Children.Where(e => e is BuildingVM))
             {
                 var bldg3D = new ViewportElementVM(bldg, new List<GeometryModel3D>()); // No geom, only grouping
                 var bldg3DChilds = new List<ViewportElementVM>();
                 foreach (SpaceVM space in bldg.Children)
                 {
-                    var geom = MakeGeometry(space.Data);
+                    var geom = MakeSpaceGeometry(space.Data);
                     bldg3DChilds.Add(new ViewportElementVM(space, geom));
                 }
                 bldg3D.SetChildren(bldg3DChilds);
                 viewport.AddElem(bldg3D);
             }
+            foreach (SurfaceCollectionVM surfColl in elem.Children.Where(e => e is SurfaceCollectionVM))
+            {   // There is supposed to be only on surface collection
+                var surfColl3D = new ViewportElementVM(surfColl, new List<GeometryModel3D>()); // No geom, only grouping
+                var surfColl3DChilds = new List<ViewportElementVM>();
+                foreach (SurfaceVM surf in surfColl.Children)
+                {
+                    var geom = MakeSurfaceGeometry(surf.Data);
+                    surfColl3DChilds.Add(new ViewportElementVM(surf, geom, surfMaterial));
+                }
+                surfColl3D.SetChildren(surfColl3DChilds);
+                viewport.AddElem(surfColl3D);
+            }
         }
 
 
         /// <summary>
-        /// Make geometry for the given XElement node
-        /// It may produce empty list
+        /// Make geometry for a Space
         /// </summary>
-        public static List<GeometryModel3D> MakeGeometry(XElement elem)
+        public static List<GeometryModel3D> MakeSpaceGeometry(XElement elem)
         {
             var geomList = new List<GeometryModel3D>();
 
-            // Determine the object type
             // Shell geometry
             foreach (var shell in elem.Elements().Where(e => e.Name.LocalName == "ShellGeometry"))
             {
@@ -58,6 +70,30 @@ namespace gbxmlviewer.ViewModel
                         {
                             geomList.Add(geom);
                         }
+                    }
+                }
+            }
+
+            return geomList;
+        }
+
+        /// <summary>
+        /// Make geometry for a Surface
+        /// </summary>
+        public static List<GeometryModel3D> MakeSurfaceGeometry(XElement elem)
+        {
+            var geomList = new List<GeometryModel3D>();
+
+            // Planar geometry
+            foreach (var planar in elem.Elements().Where(e => e.Name.LocalName == "PlanarGeometry"))
+            {
+                // Polyloop elements
+                foreach (var poly in planar.Elements().Where(e => e.Name.LocalName == "PolyLoop"))
+                {
+                    var geom = _polyLoopGeometry(poly);
+                    if (geom != null)
+                    {
+                        geomList.Add(geom);
                     }
                 }
             }

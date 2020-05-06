@@ -15,7 +15,7 @@ namespace gbxmlviewer.ViewModel
     /// Base class for gbXML element based view model classes
     /// It implements basic things such as reference to wrapped gbXml element, id, child elements
     /// </summary>
-    public class gbXmlElementVM : INotifyPropertyChanged
+    public class GbXmlElementVM : INotifyPropertyChanged
     {
         /// <summary>
         /// Implementation of INotifyPropertyChaned with auxiliary function
@@ -107,23 +107,13 @@ namespace gbxmlviewer.ViewModel
 
         private void _updateAfterDataChange()
         {
-            // Update Name
-            Name = _data.Name.LocalName;
-            NotifyPropertyChanged("Name");
-
-            // Update ID
-            var id = _data.Attributes().ToList();
-            ID = _data.Attribute("id")?.Value;
-            NotifyPropertyChanged("ID");
-            NotifyPropertyChanged("IDVisibility");
+            // Update self
+            updateAfterDataChanged();
 
             // Update children
             children.Clear();
             updateChildrenAfterDataChange();
             NotifyPropertyChanged("Children");
-
-            // Call child implementations
-            updateAfterDataChanged();
         }
 
         /// <summary>
@@ -135,7 +125,7 @@ namespace gbxmlviewer.ViewModel
         {
             foreach(var elem in _data.Elements())
             {
-                children.Add(new gbXmlElementVM() { Data = elem });
+                children.Add(new GbXmlElementVM() { Data = elem });
             }
         }
 
@@ -145,7 +135,15 @@ namespace gbxmlviewer.ViewModel
         /// </summary>
         protected virtual void updateAfterDataChanged()
         {
-            // Default implementation is empty
+            // Update Name
+            Name = _data.Name.LocalName;
+            NotifyPropertyChanged("Name");
+
+            // Update ID
+            var id = _data.Attributes().ToList();
+            ID = _data.Attribute("id")?.Value;
+            NotifyPropertyChanged("ID");
+            NotifyPropertyChanged("IDVisibility");
         }
     }
 }

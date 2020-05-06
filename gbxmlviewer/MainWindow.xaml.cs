@@ -29,11 +29,11 @@ namespace gbxmlviewer
         /// <summary>
         /// The view model used for the navigation panel (tree view)
         /// </summary>
-        public ViewModel.gbXmlVM NavigationVM
+        public ViewModel.GbXmlVM NavigationVM
         {
             get
             {
-                return _navigationControl.DataContext as ViewModel.gbXmlVM;
+                return _navigationControl.DataContext as ViewModel.GbXmlVM;
             }
             set
             {

@@ -15,7 +15,7 @@ namespace gbxmlviewer
     public partial class App : Application
     {
         public Repository Repository { get; private set; } = new Repository();
-        public gbXmlVM NavigationVM { get; private set; } = new gbXmlVM();
+        public GbXmlVM NavigationVM { get; private set; } = new GbXmlVM();
         public ViewportVM ViewportVM { get; private set; } = new ViewportVM();
 
         private void Start(object sender, StartupEventArgs e)

@@ -30,11 +30,11 @@ namespace gbxmlviewer.ViewModel
         /// <summary>
         /// Construct with reference element
         /// </summary>
-        public ViewportElementVM(gbXmlElementVM refElem, List<GeometryModel3D> geom)
+        public ViewportElementVM(GbXmlElementVM refElem, List<GeometryModel3D> geom, Material material = null)
         {
             RefElem = refElem;
             GeometryElements = geom;
-            Material = ViewportVM.DefaultMaterial;
+            Material = material != null ? material : ViewportVM.DefaultMaterial;
 
             // Sync selection
             refElem.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
@@ -73,7 +73,7 @@ namespace gbxmlviewer.ViewModel
         /// <summary>
         /// Reference to element shown
         /// </summary>
-        public gbXmlElementVM RefElem
+        public GbXmlElementVM RefElem
         {
             get;
             private set;

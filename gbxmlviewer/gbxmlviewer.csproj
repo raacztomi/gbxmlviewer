@@ -63,9 +63,10 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\BuildingVM.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="ViewModel\gbXmlElementVM.cs" />
-    <Compile Include="ViewModel\gbXmlVM.cs" />
+    <Compile Include="ViewModel\GbXmlElementVM.cs" />
+    <Compile Include="ViewModel\GbXmlVM.cs" />
     <Compile Include="ViewModel\SpaceVM.cs" />
+    <Compile Include="ViewModel\SurfaceCollectionVM.cs" />
     <Compile Include="ViewModel\SurfaceVM.cs" />
     <Compile Include="ViewModel\ViewModelHelper.cs" />
     <Compile Include="ViewModel\ViewportElementVM.cs" />
