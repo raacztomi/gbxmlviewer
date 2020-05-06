@@ -5,7 +5,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using HelixToolkit.Wpf;
 
 namespace gbxmlviewer.ViewModel
 {
@@ -34,7 +36,7 @@ namespace gbxmlviewer.ViewModel
         {
             RefElem = refElem;
             GeometryElements = geom;
-            Material = material != null ? material : ViewportVM.DefaultMaterial;
+            Material = material != null ? material : DefaultMaterial;
 
             // Sync selection
             refElem.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
@@ -122,7 +124,7 @@ namespace gbxmlviewer.ViewModel
                     _isSelected = value;
                     foreach (var elem in GeometryElements)
                     {
-                        elem.Material = _isSelected ? ViewportVM.SelectionMaterial : _material;
+                        elem.Material = _isSelected ? SelectionMaterial : _material;
                     }
                     NotifyPropertyChanged();
 
@@ -143,5 +145,24 @@ namespace gbxmlviewer.ViewModel
             get;
             private set;
         }
+
+        /// <summary>
+        /// Default material of the viewport elements
+        /// </summary>
+        private static Material _defaultMaterial = MaterialHelper.CreateMaterial(Color.FromArgb(64, 192, 192, 192));
+        public virtual Material DefaultMaterial
+        {
+            get { return _defaultMaterial; }
+        }
+
+        /// <summary>
+        /// Selection material of the viewport elements
+        /// </summary>
+        private static Material _selectionMaterial = MaterialHelper.CreateMaterial(Colors.Yellow);
+        public virtual Material SelectionMaterial
+        {
+            get { return _selectionMaterial; }
+        }
+
     }
 }

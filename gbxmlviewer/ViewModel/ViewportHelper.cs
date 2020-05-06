@@ -29,7 +29,7 @@ namespace gbxmlviewer.ViewModel
                 foreach (SpaceVM space in bldg.Children)
                 {
                     var geom = MakeSpaceGeometry(space.Data);
-                    bldg3DChilds.Add(new ViewportElementVM(space, geom));
+                    bldg3DChilds.Add(new ViewportSpaceVM(space, geom));
                 }
                 bldg3D.SetChildren(bldg3DChilds);
                 viewport.AddElem(bldg3D);
@@ -135,7 +135,7 @@ namespace gbxmlviewer.ViewModel
             var geom = new GeometryModel3D()
             {
                 Geometry = mbuilder.ToMesh(),
-                Material = ViewportVM.DefaultMaterial
+                Material = MaterialHelper.CreateMaterial(Colors.LightGray) // Just in case, not to accidentally remain invisible (consequence of null)
             };
 
             return geom;

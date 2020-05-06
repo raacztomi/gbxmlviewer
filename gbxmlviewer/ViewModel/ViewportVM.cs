@@ -17,24 +17,6 @@ namespace gbxmlviewer.ViewModel
     public class ViewportVM : INotifyPropertyChanged
     {
         /// <summary>
-        /// Default material of the viewport elements
-        /// </summary>
-        public static Material DefaultMaterial
-        {
-            get;
-            private set;
-        } = MaterialHelper.CreateMaterial(Color.FromArgb(64, 192, 192, 192));
-
-        /// <summary>
-        /// Selection material of the viewport elements
-        /// </summary>
-        public static Material SelectionMaterial
-        {
-            get;
-            private set;
-        } = MaterialHelper.CreateMaterial(Colors.Yellow);
-
-        /// <summary>
         /// Implementation of INotifyPropertyChaned with auxiliary function
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
