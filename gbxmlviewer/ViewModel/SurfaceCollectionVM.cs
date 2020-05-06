@@ -10,7 +10,7 @@ namespace gbxmlviewer.ViewModel
     /// Collection element for surfces in the navigation tree
     /// It has no corresponding gbXML node but takes the parent of all Surfaces, the Campus node
     /// </summary>
-    class SurfaceCollectionVM : GbXmlElementVM
+    class SurfaceCollectionVM : NavigationElementVM
     {
         /// <summary>
         /// Extract surfaces

@@ -12,7 +12,7 @@
                 <Style TargetType="TreeViewItem">
                     <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
                 </Style>
-                <HierarchicalDataTemplate DataType="{x:Type VM:GbXmlElementVM}" ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate DataType="{x:Type VM:NavigationElementVM}" ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Name}"/>
                         <StackPanel Orientation="Horizontal" Visibility="{Binding IDVisibility}">

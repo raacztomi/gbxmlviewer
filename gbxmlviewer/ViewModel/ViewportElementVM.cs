@@ -30,7 +30,7 @@ namespace gbxmlviewer.ViewModel
         /// <summary>
         /// Construct with reference element
         /// </summary>
-        public ViewportElementVM(GbXmlElementVM refElem, List<GeometryModel3D> geom, Material material = null)
+        public ViewportElementVM(NavigationElementVM refElem, List<GeometryModel3D> geom, Material material = null)
         {
             RefElem = refElem;
             GeometryElements = geom;
@@ -73,7 +73,7 @@ namespace gbxmlviewer.ViewModel
         /// <summary>
         /// Reference to element shown
         /// </summary>
-        public GbXmlElementVM RefElem
+        public NavigationElementVM RefElem
         {
             get;
             private set;

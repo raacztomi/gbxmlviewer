@@ -10,7 +10,7 @@ namespace gbxmlviewer.ViewModel
     /// Class corresponds to the root level of the gbXML file
     /// It extracts elements relevant to the context of this tool: Building and Surfaces, make those available as child
     /// </summary>
-    public class GbXmlVM : GbXmlElementVM
+    public class NavigationRootVM : NavigationElementVM
     {
         /// <summary>
         /// Extract building and surfaces

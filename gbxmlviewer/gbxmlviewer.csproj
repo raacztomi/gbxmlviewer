@@ -63,12 +63,12 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\BuildingVM.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="ViewModel\GbXmlElementVM.cs" />
-    <Compile Include="ViewModel\GbXmlVM.cs" />
+    <Compile Include="ViewModel\NavigationElementVM.cs" />
+    <Compile Include="ViewModel\NavigationRootVM.cs" />
     <Compile Include="ViewModel\SpaceVM.cs" />
     <Compile Include="ViewModel\SurfaceCollectionVM.cs" />
     <Compile Include="ViewModel\SurfaceVM.cs" />
-    <Compile Include="ViewModel\ViewModelHelper.cs" />
+    <Compile Include="ViewModel\ViewportHelper.cs" />
     <Compile Include="ViewModel\ViewportElementVM.cs" />
     <Compile Include="ViewModel\ViewportVM.cs" />
     <Compile Include="ViewportControl.xaml.cs">

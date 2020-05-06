@@ -12,12 +12,12 @@ using HelixToolkit.Wpf;
 
 namespace gbxmlviewer.ViewModel
 {
-    class ViewModelHelper
+    class ViewportHelper
     {
         /// <summary>
         /// Update the viewport from the element view model
         /// </summary>
-        public static void UpdateViewport(GbXmlVM elem, ViewportVM viewport)
+        public static void UpdateViewport(NavigationRootVM elem, ViewportVM viewport)
         {
             Material surfMaterial = MaterialHelper.CreateMaterial(Color.FromArgb(32, 64, 64, 128));
 

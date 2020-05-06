@@ -15,7 +15,7 @@ namespace gbxmlviewer.ViewModel
     /// Base class for gbXML element based view model classes
     /// It implements basic things such as reference to wrapped gbXml element, id, child elements
     /// </summary>
-    public class GbXmlElementVM : INotifyPropertyChanged
+    public class NavigationElementVM : INotifyPropertyChanged
     {
         /// <summary>
         /// Implementation of INotifyPropertyChaned with auxiliary function
@@ -125,7 +125,7 @@ namespace gbxmlviewer.ViewModel
         {
             foreach(var elem in _data.Elements())
             {
-                children.Add(new GbXmlElementVM() { Data = elem });
+                children.Add(new NavigationElementVM() { Data = elem });
             }
         }
 
