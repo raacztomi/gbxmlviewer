@@ -69,7 +69,7 @@ namespace gbxmlviewer.ViewModel
         public void SetChildren(List<ViewportElementVM> children)
         {
             _children = children;
-            NotifyPropertyChanged("Children");
+            NotifyPropertyChanged(nameof(Children));
         }
 
         /// <summary>

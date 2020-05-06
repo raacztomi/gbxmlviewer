@@ -16,19 +16,19 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="28"/>
+            <RowDefinition Height="36"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Style="{StaticResource basic}">
-            <MenuItem Header="_Open"/>
+            <MenuItem Header="_Open gbXML" Margin="5" Click="Open_Click"/>
         </Menu>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="3"/>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="0"/>
             </Grid.ColumnDefinitions>
             <local:NavigationControl x:Name="_navigationControl" Grid.Column="0" Style="{StaticResource basic}"/>
             <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

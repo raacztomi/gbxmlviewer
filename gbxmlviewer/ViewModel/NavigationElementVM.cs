@@ -113,16 +113,21 @@ namespace gbxmlviewer.ViewModel
             // Update children
             children.Clear();
             updateChildrenAfterDataChange();
-            NotifyPropertyChanged("Children");
+            NotifyPropertyChanged(nameof(Children));
         }
 
         /// <summary>
         /// Updates Children upon Data change.
         /// It adds items into the protected children field (which is exposed as Childrend property and is cleared at this point)
         /// Default implementation list all immediate child elements but this can be overriden
+        /// Watvh for Data being null!
         /// </summary>
         protected virtual void updateChildrenAfterDataChange()
         {
+            if(_data == null)
+            {
+                return;
+            }
             foreach(var elem in _data.Elements())
             {
                 children.Add(new NavigationElementVM() { Data = elem });
@@ -135,15 +140,27 @@ namespace gbxmlviewer.ViewModel
         /// </summary>
         protected virtual void updateAfterDataChanged()
         {
+            if(_data == null)
+            {
+                Name = string.Empty;
+                ID = string.Empty;
+                children.Clear();
+                _isSelected = false;
+                NotifyPropertyChanged(nameof(Name));
+                NotifyPropertyChanged(nameof(ID));
+                NotifyPropertyChanged(nameof(IDVisibility));
+                return;
+            }
+
             // Update Name
             Name = _data.Name.LocalName;
-            NotifyPropertyChanged("Name");
+            NotifyPropertyChanged(nameof(Name));
 
             // Update ID
             var id = _data.Attributes().ToList();
             ID = _data.Attribute("id")?.Value;
-            NotifyPropertyChanged("ID");
-            NotifyPropertyChanged("IDVisibility");
+            NotifyPropertyChanged(nameof(ID));
+            NotifyPropertyChanged(nameof(IDVisibility));
         }
     }
 }

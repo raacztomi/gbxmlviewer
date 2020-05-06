@@ -24,7 +24,14 @@ namespace gbxmlviewer
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
         }
+
+        /// <summary>
+        /// Reference to the app
+        /// </summary>
+        internal App TheApp { get; set; }
 
         /// <summary>
         /// The view model used for the navigation panel (tree view)
@@ -55,6 +62,12 @@ namespace gbxmlviewer
             {
                 _viewportControl.DataContext = value;
             }
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            TheApp.OpenFileCommand();
+            _viewportControl.ZoomAll();
         }
     }
 }

@@ -50,7 +50,7 @@ namespace gbxmlviewer.ViewModel
         {
             _elementMap.Clear();
             _geometryCollection.Clear();
-            NotifyPropertyChanged("GeometryCollection");
+            NotifyPropertyChanged(nameof(GeometryCollection));
         }
 
         public void AddElem(ViewportElementVM elem)
@@ -67,7 +67,7 @@ namespace gbxmlviewer.ViewModel
             {
                 AddElem(child);
             }
-            NotifyPropertyChanged("GeometryCollection");
+            NotifyPropertyChanged(nameof(GeometryCollection));
         }
     }
 }

@@ -28,6 +28,14 @@ namespace gbxmlviewer
             //_testItems();
         }
 
+        /// <summary>
+        /// Zoom all
+        /// </summary>
+        public void ZoomAll()
+        {
+            _viewportControl.ZoomExtents();
+        }
+
 
         private void _testItems()
         {

@@ -17,6 +17,10 @@ namespace gbxmlviewer.ViewModel
         /// </summary>
         protected override void updateChildrenAfterDataChange()
         {
+            if(Data == null)
+            {
+                return;
+            }
             var campus = Data.Elements().Where(e => e.Name.LocalName == "Campus").FirstOrDefault();
             if(campus != null)
             {

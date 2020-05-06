@@ -14,6 +14,10 @@ namespace gbxmlviewer
         /// </summary>
         protected override void updateChildrenAfterDataChange()
         {
+            if(Data == null)
+            {
+                return;
+            }
             // Spaces elements
             foreach (var space in Data.Elements().Where(e => e.Name.LocalName == "Space"))
             {
