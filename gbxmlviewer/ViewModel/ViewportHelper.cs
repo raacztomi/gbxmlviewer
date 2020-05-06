@@ -19,8 +19,6 @@ namespace gbxmlviewer.ViewModel
         /// </summary>
         public static void UpdateViewport(NavigationRootVM elem, ViewportVM viewport)
         {
-            Material surfMaterial = MaterialHelper.CreateMaterial(Color.FromArgb(32, 64, 64, 128));
-
             viewport.Clear();
             foreach (BuildingVM bldg in elem.Children.Where(e => e is BuildingVM))
             {
@@ -41,7 +39,7 @@ namespace gbxmlviewer.ViewModel
                 foreach (SurfaceVM surf in surfColl.Children)
                 {
                     var geom = MakeSurfaceGeometry(surf.Data);
-                    surfColl3DChilds.Add(new ViewportElementVM(surf, geom, surfMaterial));
+                    surfColl3DChilds.Add(new ViewportSurfaceVM(surf, geom));
                 }
                 surfColl3D.SetChildren(surfColl3DChilds);
                 viewport.AddElem(surfColl3D);
@@ -131,11 +129,13 @@ namespace gbxmlviewer.ViewModel
 
             var mbuilder = new MeshBuilder(false, false, false);
             mbuilder.AddPolygon(points);
-
+            var mesh = mbuilder.ToMesh();
+            var material = MaterialHelper.CreateMaterial(Colors.LightGray); // Just in case, not to accidentally remain invisible (consequence of null)
             var geom = new GeometryModel3D()
             {
-                Geometry = mbuilder.ToMesh(),
-                Material = MaterialHelper.CreateMaterial(Colors.LightGray) // Just in case, not to accidentally remain invisible (consequence of null)
+                Geometry = mesh,
+                Material = material,
+                BackMaterial = null
             };
 
             return geom;

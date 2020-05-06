@@ -9,17 +9,14 @@
     <Grid>
         <h:HelixViewport3D x:Name="_viewportControl" ClipToBounds="True" ZoomExtentsWhenLoaded="True">
             <h:HelixViewport3D.Children>
-                <h:DefaultLights/>
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <Model3DGroup Children="{Binding Lights}"/>
-                    </ModelVisual3D.Content>
-                </ModelVisual3D>
-                <ModelVisual3D>
-                    <ModelVisual3D.Content>
-                        <Model3DGroup Children="{Binding GeometryCollection}"/>
-                    </ModelVisual3D.Content>
-                </ModelVisual3D>
+                <h:SunLight/>
+                <h:SortingVisual3D Method="BoundingBoxCorners" SortingFrequency="30" CheckForOpaqueVisuals="True">
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <Model3DGroup Children="{Binding GeometryCollection}"/>
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+                </h:SortingVisual3D>
             </h:HelixViewport3D.Children>
         </h:HelixViewport3D>
     </Grid>

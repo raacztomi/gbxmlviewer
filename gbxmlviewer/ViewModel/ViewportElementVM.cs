@@ -98,9 +98,10 @@ namespace gbxmlviewer.ViewModel
                     _material = value;
                     if(!_isSelected)
                     {
-                        foreach (var elem in GeometryElements)
+                        foreach (var geom in GeometryElements)
                         {
-                            elem.Material = _material;
+                            geom.Material = _material;
+                            geom.BackMaterial = _material;
                         }
                     }
                 }
@@ -122,9 +123,11 @@ namespace gbxmlviewer.ViewModel
                 if(_isSelected != value)
                 {
                     _isSelected = value;
-                    foreach (var elem in GeometryElements)
+                    foreach (var geom in GeometryElements)
                     {
-                        elem.Material = _isSelected ? SelectionMaterial : _material;
+                        var material = _isSelected ? SelectionMaterial : _material;
+                        geom.Material = material;
+                        geom.BackMaterial = material;
                     }
                     NotifyPropertyChanged();
 
