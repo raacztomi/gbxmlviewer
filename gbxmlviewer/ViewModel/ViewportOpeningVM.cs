@@ -24,7 +24,7 @@ namespace gbxmlviewer.ViewModel
         /// <summary>
         /// Default material for spaces in the viewport
         /// </summary>
-        private static Material _defaultMaterial = MaterialHelper.CreateMaterial(Color.FromArgb(128, 128, 192, 0));    // Transparent deep green
+        private static Material _defaultMaterial = MaterialHelper.CreateMaterial(Color.FromArgb(32, 173, 216, 230));    // Transparent light blue
         public override Material DefaultMaterial => _defaultMaterial;
     }
 }
