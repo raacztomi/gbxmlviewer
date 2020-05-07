@@ -13,6 +13,15 @@ namespace gbxmlviewer.ViewModel
         /// </summary>
         protected override void updateChildrenAfterDataChange()
         {
+            if (Data == null)
+            {
+                return;
+            }
+            // Opening elements
+            foreach (var opening in Data.Elements().Where(e => e.Name.LocalName == "Opening"))
+            {
+                children.Add(new OpeningVM() { Data = opening });
+            }
         }
     }
 }

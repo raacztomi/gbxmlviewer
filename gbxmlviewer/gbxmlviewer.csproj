@@ -65,6 +65,8 @@
     <Compile Include="Repository.cs" />
     <Compile Include="ViewModel\NavigationElementVM.cs" />
     <Compile Include="ViewModel\NavigationRootVM.cs" />
+    <Compile Include="ViewModel\OpeningVM.cs" />
+    <Compile Include="ViewModel\ViewportOpeningVM.cs" />
     <Compile Include="ViewModel\ViewportSurfaceVM.cs" />
     <Compile Include="ViewModel\ViewportSpaceVM.cs" />
     <Compile Include="ViewModel\SpaceVM.cs" />

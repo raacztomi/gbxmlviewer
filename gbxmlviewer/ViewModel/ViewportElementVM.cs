@@ -35,7 +35,7 @@ namespace gbxmlviewer.ViewModel
         public ViewportElementVM(NavigationElementVM refElem, List<GeometryModel3D> geom, Material material = null)
         {
             RefElem = refElem;
-            GeometryElements = geom;
+            GeometryElements = geom != null ? geom : new List<GeometryModel3D>();
             Material = material != null ? material : DefaultMaterial;
 
             // Sync selection
@@ -146,7 +146,7 @@ namespace gbxmlviewer.ViewModel
         public List<GeometryModel3D> GeometryElements
         {
             get;
-            private set;
+            protected set;
         }
 
         /// <summary>

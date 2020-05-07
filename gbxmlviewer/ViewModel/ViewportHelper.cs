@@ -36,10 +36,17 @@ namespace gbxmlviewer.ViewModel
             {   // There is supposed to be only on surface collection
                 var surfColl3D = new ViewportElementVM(surfColl, new List<GeometryModel3D>()); // No geom, only grouping
                 var surfColl3DChilds = new List<ViewportElementVM>();
-                foreach (SurfaceVM surf in surfColl.Children)
+                foreach (SurfaceVM surf in surfColl.Children.Where(e => e is SurfaceVM))
                 {
-                    var geom = MakeSurfaceGeometry(surf.Data);
-                    surfColl3DChilds.Add(new ViewportSurfaceVM(surf, geom));
+                    var surfGeom = MakePlanarGeometry(surf.Data);
+                    var surf3D = new ViewportSurfaceVM(surf, surfGeom);
+                    surfColl3DChilds.Add(surf3D);
+                    foreach(OpeningVM opening in surf.Children.Where(e => e is OpeningVM))
+                    {
+                        var openingGeom = MakePlanarGeometry(opening.Data);
+                        var opening3D = new ViewportOpeningVM(opening, openingGeom);
+                        surfColl3DChilds.Add(opening3D);  // Openings are selected individually from surfaces, but not from surface collections
+                    }
                 }
                 surfColl3D.SetChildren(surfColl3DChilds);
                 viewport.AddElem(surfColl3D);
@@ -78,7 +85,7 @@ namespace gbxmlviewer.ViewModel
         /// <summary>
         /// Make geometry for a Surface
         /// </summary>
-        public static List<GeometryModel3D> MakeSurfaceGeometry(XElement elem)
+        public static List<GeometryModel3D> MakePlanarGeometry(XElement elem)
         {
             var geomList = new List<GeometryModel3D>();
 
