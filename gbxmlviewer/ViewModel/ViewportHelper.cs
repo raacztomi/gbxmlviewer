@@ -147,5 +147,65 @@ namespace gbxmlviewer.ViewModel
 
             return geom;
         }
+
+
+        /// <summary>
+        /// Extract vertex coordinates of a PolyLoop
+        /// </summary>
+        private static Point3DCollection _polyLoopVertices(XElement poly)
+        {
+            var points = new Point3DCollection();
+
+            // Cartesian points
+            foreach (var point in poly.Elements().Where(e => e.Name.LocalName == "CartesianPoint"))
+            {
+                var ptCoords = new List<double>();
+                foreach (var coord in point.Elements().Where(e => e.Name.LocalName == "Coordinate"))
+                {
+                    ptCoords.Add(double.Parse(coord.Value));
+                }
+                if (ptCoords.Count > 2)
+                {
+                    points.Add(new Point3D(ptCoords[0], ptCoords[1], ptCoords[2]));
+                }
+            }
+
+            if(points.Count < 3)
+            {
+                points.Clear(); // At least a triangle is expected
+            }
+
+            return points;
+        }
+
+        private GeometryModel3D _meshGeometryFromTriangles(Point3DCollection vertices, Int32Collection triangles)
+        {
+            var mesh = new MeshGeometry3D()
+            {
+                Positions = vertices,
+                TriangleIndices = triangles
+            };
+            var material = MaterialHelper.CreateMaterial(Colors.LightGray); // Just in case, not to accidentally remain invisible (consequence of null)
+            var geom = new GeometryModel3D()
+            {
+                Geometry = mesh,
+                Material = material,
+                BackMaterial = null
+            };
+
+            return geom;
+        }
+
+        /// <summary>
+        /// Takes one outer and zero or more inner contours to triangulate.
+        /// Results a single list of vertices and triangles array of triads defining the trinagle faces
+        /// Non self intersecting contours and contours not intersecting each other is expected, otherwise the results are unpredicted
+        /// </summary>
+        private static bool _polyTriangles(in List<Point3DCollection> contours, out Point3DCollection vertices, out Int32Collection triangles)
+        {
+            vertices = new Point3DCollection();
+            triangles = new Int32Collection();
+            return true;
+        }
     }
 }
