@@ -27,20 +27,5 @@ namespace gbxmlviewer
         {
             InitializeComponent();
         }
-
-        //public IEnumerable<object> Itemss 
-        //{ 
-        //    get
-        //    {
-        //        XmlNamespaceManager nsmgr = new XmlNamespaceManager(new NameTable());
-        //        nsmgr.AddNamespace(string.Empty, "http://www.gbxml.org/schema");
-        //        var xi = Data.XPathSelectElements("Campus", nsmgr).ToList();
-
-        //        var xitems = Data.Elements()
-        //            .Where(x => x.Name.LocalName == "Campus").ToList();
-        //            //.Where(x => x.Name.LocalName == "Building").ToList();
-        //        return xitems.Select(i => new BuildingVM() { Data = i });
-        //    }
-        //}
     }
 }

@@ -20,7 +20,6 @@ namespace gbxmlviewer.ViewModel
         /// Implementation of INotifyPropertyChaned with auxiliary function
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             if (PropertyChanged != null)
@@ -36,9 +35,10 @@ namespace gbxmlviewer.ViewModel
         {
             RefElem = refElem;
             GeometryElements = geom != null ? geom : new List<GeometryModel3D>();
-            Material = material != null ? material : DefaultMaterial;
+            _material = material != null ? material : DefaultMaterial;
+            _setGeometryMaterial();
 
-            // Sync selection
+            // Mechanism to sync selection
             refElem.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
             {
                 if (sender == refElem && e.PropertyName == "IsSelected")
@@ -82,6 +82,35 @@ namespace gbxmlviewer.ViewModel
         }
 
         /// <summary>
+        /// Queries and sets the visibility of the element
+        /// Visibility is stored in a flag and achieved by setting the material null, the two are synchronized,
+        /// which enables to reset hidden state after selection is removed
+        /// </summary>
+        private bool _isVisible = true;
+        public bool IsVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+            set
+            {
+                if(_isVisible != value)
+                {
+                    _isVisible = value;
+                    _setGeometryMaterial();
+                    NotifyPropertyChanged();
+
+                    foreach (var child in Children)
+                    {
+                        child.IsSelected = value;
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
         /// Material of the element
         /// </summary>
         private Material _material;
@@ -96,14 +125,7 @@ namespace gbxmlviewer.ViewModel
                 if(_material != value)
                 {
                     _material = value;
-                    if(!_isSelected)
-                    {
-                        foreach (var geom in GeometryElements)
-                        {
-                            geom.Material = _material;
-                            geom.BackMaterial = _material;
-                        }
-                    }
+                    _setGeometryMaterial();
                 }
             }
         }
@@ -123,12 +145,7 @@ namespace gbxmlviewer.ViewModel
                 if(_isSelected != value)
                 {
                     _isSelected = value;
-                    foreach (var geom in GeometryElements)
-                    {
-                        var material = _isSelected ? SelectionMaterial : _material;
-                        geom.Material = material;
-                        geom.BackMaterial = material;
-                    }
+                    _setGeometryMaterial();
                     NotifyPropertyChanged();
 
                     foreach (var child in Children)
@@ -147,6 +164,27 @@ namespace gbxmlviewer.ViewModel
         {
             get;
             protected set;
+        }
+
+        /// <summary>
+        /// Should be called when settings affecting material change (visibility, selection, material itself)
+        /// </summary>
+        private void _setGeometryMaterial()
+        {
+            Material material = _material;
+            if(!_isVisible)
+            {
+                material = null;
+            }
+            if(_isSelected)
+            {
+                material = SelectionMaterial;
+            }
+            foreach (var geom in GeometryElements)
+            {
+                geom.Material = material;
+                geom.BackMaterial = material;
+            }
         }
 
         /// <summary>

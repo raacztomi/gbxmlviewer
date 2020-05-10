@@ -49,6 +49,9 @@ namespace gbxmlviewer.ViewModel
             protected set;
         }
 
+        /// <summary>
+        /// Indicates if the element is selected in the view
+        /// </summary>
         bool _isSelected = false;
         public bool IsSelected
         {
@@ -78,7 +81,6 @@ namespace gbxmlviewer.ViewModel
         /// Collection of children elements
         /// </summary>
         protected List<object> children = new List<object>();
-
         public ReadOnlyCollection<object> Children
         {
             get
@@ -105,6 +107,9 @@ namespace gbxmlviewer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Update the viewmodel on data change
+        /// </summary>
         private void _updateAfterDataChange()
         {
             // Update self

@@ -14,6 +14,9 @@ using System.Windows.Controls;
 
 namespace gbxmlviewer.ViewModel
 {
+    /// <summary>
+    /// Helper functions for building the viewport elements
+    /// </summary>
     class ViewportHelper
     {
         /// <summary>

@@ -10,7 +10,7 @@ namespace gbxmlviewer
     public class BuildingVM : NavigationElementVM
     {
         /// <summary>
-        /// Extract spaces 
+        /// Extract spaces into child items from xml data
         /// </summary>
         protected override void updateChildrenAfterDataChange()
         {

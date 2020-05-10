@@ -13,7 +13,7 @@ namespace gbxmlviewer.ViewModel
     class SurfaceCollectionVM : NavigationElementVM
     {
         /// <summary>
-        /// Extract surfaces
+        /// Extract surface childs
         /// </summary>
         protected override void updateChildrenAfterDataChange()
         {
@@ -24,6 +24,9 @@ namespace gbxmlviewer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Override update on data change
+        /// </summary>
         protected override void updateAfterDataChanged()
         {
             Name = "Surfaces";

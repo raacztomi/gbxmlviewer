@@ -69,5 +69,16 @@ namespace gbxmlviewer.ViewModel
             }
             NotifyPropertyChanged(nameof(GeometryCollection));
         }
+
+        /// <summary>
+        /// Sets visibility based on reference element type of the contained ViewportElementVMs
+        /// </summary>
+        public void SetRefElemVisibility<TNavVM>(bool visible)
+        {
+            foreach(var elem in _elementMap.Where(e => e.Key is TNavVM).Select(e => e.Value))
+            {
+                elem.IsVisible = visible;
+            }
+        }
     }
 }

@@ -16,11 +16,11 @@ namespace gbxmlviewer
     /// </summary>
     public partial class App : Application
     {
-        public Repository Repository { get; private set; } = new Repository();
-        public NavigationRootVM NavigationVM { get; private set; } = new NavigationRootVM();
-        public ViewportVM ViewportVM { get; private set; } = new ViewportVM();
+        internal Repository Repository { get; private set; } = new Repository();    //< Repository managing the gbXML data
+        internal NavigationRootVM NavigationVM { get; private set; } = new NavigationRootVM();  //< View model for the navigation view
+        internal ViewportVM ViewportVM { get; private set; } = new ViewportVM();    //< View model for the viewport (3D)
 
-        private readonly static string defaultTitle = "[no gbXML data]";
+        private readonly static string defaultTitle = "[no gbXML data]";    //< default title for the main windows
 
         /// <summary>
         /// The this.MainWindow casted to MainWindow
@@ -60,6 +60,11 @@ namespace gbxmlviewer
                 // Clear view of previous file
                 NavigationVM.Data = null;
                 ViewportVM.Clear();
+
+                // Reset visibilities to default
+                MainWin.IsSpacesVisible = true;
+                MainWin.IsSurfacesVisible = true;
+                MainWin.IsOpeningsVisible = true;
 
                 // Load and present current file
                 if(Repository.LoadFile(openFileDialog.FileName))
